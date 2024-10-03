@@ -5,6 +5,8 @@ import android.content.ClipData;
 import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
@@ -28,6 +30,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.net.URISyntaxException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -76,14 +80,36 @@ public class MainActivity extends AppCompatActivity {
                 public boolean shouldOverrideUrlLoading(WebView webView, WebResourceRequest request)
                 {
                     Uri uri = request.getUrl();
+
                     return shouldOverrideUrlLoading(uri.toString(), webView);
                 }
 
                 private boolean shouldOverrideUrlLoading(final String url, WebView v) {
 
                     // Here put your code
+                    if(!url.startsWith("https://")) {
+                        try {
+                            Intent intent = Intent.parseUri(url, Intent.URI_INTENT_SCHEME);
+                            if (intent != null) {
+                                PackageManager packageManager = getPackageManager();
+                                if (packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY) != null) {
+                                    startActivity(intent);
+                                    return true;
+                                } else {
+                                    // App not installed, handle fallback URL
+                                    String fallbackUrl = intent.getStringExtra("browser_fallback_url");
+                                    if (fallbackUrl != null) {
+                                        v.loadUrl(fallbackUrl);
+                                        return true;
+                                    }
+                                }
+                            }
+                        } catch (URISyntaxException e) {
+                            // Handle parsing error
+                        }
+                    }
                     v.loadUrl(url);
-                    return false; // Returning True means that application wants to leave the current WebView and handle the url itself, otherwise return false.
+                    return true; // Returning True means that application wants to leave the current WebView and handle the url itself, otherwise return false.
                 }
             });
 
@@ -105,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.refresh).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    webView.reload();
+                    webView.evaluateJavascript("document.body.dispatchEvent(new KeyboardEvent('keydown',{key:'F5'}))", null);
                     webView.requestFocus();
                 }
             });
@@ -188,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.slash).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    webView.evaluateJavascript("document.body.dispatchEvent(new KeyboardEvent('keydown',{key:'/'}))", null);
+                    webView.evaluateJavascript("document.body.dispatchEvent(new KeyboardEvent('keypress',{key:'/'}))", null);
                 }
             });
         } catch (Exception e) {};
