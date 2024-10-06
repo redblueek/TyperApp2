@@ -205,10 +205,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             });
-            findViewById(R.id.tab).setOnClickListener(new View.OnClickListener() {
+            findViewById(R.id.enter).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    webView.evaluateJavascript("document.body.dispatchEvent(new KeyboardEvent('keydown',{key:'Tab'}))", null);
+                    webView.evaluateJavascript("document.body.dispatchEvent(new KeyboardEvent('keypress',{key:'Enter'}))", null);
                 }
             });
             findViewById(R.id.slash).setOnClickListener(new View.OnClickListener() {

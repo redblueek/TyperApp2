@@ -111,16 +111,13 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1" />
-            <Button
-                android:id="@+id/ctrl"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                
-                android:text="CTRL"
-                android:textColor="@color/foreground"
-                android:background="#0000"
-                android:textSize="16sp"
-                android:padding="1dp" />
+                <Button
+                    android:id="@+id/homeButton"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/home"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -149,7 +146,7 @@
             </LinearLayout>
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_weight="0.16"
                 android:orientation="horizontal">
                 <Space
@@ -157,12 +154,11 @@
                     android:layout_height="0dp"
                     android:layout_weight="1" />
             <Button
-                android:id="@+id/homeButton"
+                android:id="@+id/enter"
                 android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:background="@drawable/home"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                android:layout_height="40dp"
+                android:background="@drawable/enter"
+                android:layout_margin="5dp" />
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -184,13 +180,10 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
             <Button
-                android:id="@+id/tab"
+                android:id="@+id/paste"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-
-                android:text="TAB"
-                android:textColor="@color/foreground"
-                android:background="#0000"
+                android:background="@drawable/paste"
                 android:textSize="16sp"
                 android:padding="1dp" />
             <Space
@@ -198,6 +191,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
         </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -207,16 +201,17 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1" />
-            <Button
-                android:id="@+id/slash"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                <Button
+                    android:id="@+id/ctrl"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
 
-                android:text="/"
-                android:textColor="@color/foreground"
-                android:background="#0000"
-                android:textSize="25sp"
-                android:padding="1dp" />
+                    android:text="CTRL"
+                    android:textColor="@color/foreground"
+                    android:background="#0000"
+                    android:textSize="16sp"
+                    android:padding="1dp" />
+
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -231,13 +226,16 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1" />
-            <Button
-                android:id="@+id/paste"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:background="@drawable/paste"
-                android:textSize="16sp"
-                android:padding="1dp" />
+                <Button
+                    android:id="@+id/slash"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+
+                    android:text="/"
+                    android:textColor="@color/foreground"
+                    android:background="#0000"
+                    android:textSize="25sp"
+                    android:padding="1dp" />
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="0dp"
