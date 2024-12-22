@@ -7,6 +7,8 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Build;
@@ -18,6 +20,7 @@ import android.view.Window;
 import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.ValueCallback;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -32,6 +35,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import java.net.URISyntaxException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -58,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+
+        Timer timer = new Timer();
+
 
         try {
             WebView webView = findViewById(R.id.webView);
@@ -124,8 +132,30 @@ public class MainActivity extends AppCompatActivity {
 
                     webView.requestFocus();
 
+                    webView.evaluateJavascript("window.getComputedStyle(document.body.parentElement)['background'];", new ValueCallback<String>() {
+                        @Override
+                        public void onReceiveValue(String s) {
+                            String[] c = s.replace("\"rgb(", "").replace(" ", "").split("\\)")[0].split(",");
+                            findViewById(R.id.main).setBackgroundColor(Color.rgb(Integer.parseInt(c[0]), Integer.parseInt(c[1]), Integer.parseInt(c[2])));
+                        }
+                    });
+                    webView.evaluateJavascript("window.getComputedStyle(document.body.parentElement).color;", new ValueCallback<String>() {
+                        @Override
+                        public void onReceiveValue(String s) {
+                            Log.d("Color: ", s);
+                            String[] c = s.replace("\"rgb(", "").replace(" ", "").split("\\)")[0].split(",");
+                            Button[] views = { findViewById(R.id.keyboard), findViewById(R.id.refresh), findViewById(R.id.clear), findViewById(R.id.homeButton), findViewById(R.id.arrowUp), findViewById(R.id.enter), findViewById(R.id.paste), findViewById(R.id.ctrl), findViewById(R.id.slash), findViewById(R.id.arrowLeft), findViewById(R.id.arrowDown), findViewById(R.id.arrowRight) };
+                            int color = Color.rgb(Integer.parseInt(c[0]), Integer.parseInt(c[1]), Integer.parseInt(c[2]));
+                            for (Button v : views) {
+                                v.setBackgroundTintList(ColorStateList.valueOf(color));
+                                v.setTextColor(color);
+                            }
+                        }
+
+                    });
                 }
             };
+
             button.setOnClickListener(kb);
             findViewById(R.id.cardView).setOnClickListener(kb);
             findViewById(R.id.refresh).setOnClickListener(new View.OnClickListener() {

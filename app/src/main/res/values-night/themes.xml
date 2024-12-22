@@ -5,6 +5,5 @@
         <item name="android:windowSoftInputMode">adjustResize</item>
          <item name="colorPrimary">@color/foreground</item>
         <item name="android:textColor">@color/foreground</item>
-        <item name="android:background">@color/first</item>
     </style>
 </resources>
