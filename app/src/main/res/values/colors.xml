@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#ff2f2f2f</color>
-    <color name="first">#1f1f1f</color>
-    <color name="foreground">#dcccb5</color>
-    <color name="buttons">#d0bcff</color>
+    <color name="black">#313f4a</color>
+    <color name="first">#313f4a</color>
+    <color name="foreground">#e4eefa</color>
+    <color name="buttons">#e4eefa</color>
 </resources>

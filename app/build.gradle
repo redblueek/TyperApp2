@@ -36,7 +36,20 @@ dependencies {
     implementation libs.activity
     implementation libs.constraintlayout
     implementation libs.media3.common
+    implementation libs.annotation.jvm
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+
+
+}
+
+configurations {
+    configureEach {
+        resolutionStrategy {
+            force 'androidx.annotation:annotation:1.9.1' // Or the latest stable version
+        // If you are using annotation-jvm, you can force that instead
+        // force 'androidx.annotation:annotation-jvm:1.9.1'
+        }
+    }
 }

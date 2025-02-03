@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-            webView.loadUrl("https://grosik.ovh/typer/");
+            webView.loadUrl("https://grosik.dev/typer/");
             webView.requestFocus();
             View.OnClickListener kb = new View.OnClickListener() {
                 @Override
@@ -142,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
                     webView.evaluateJavascript("window.getComputedStyle(document.body.parentElement).color;", new ValueCallback<String>() {
                         @Override
                         public void onReceiveValue(String s) {
-                            Log.d("Color: ", s);
                             String[] c = s.replace("\"rgb(", "").replace(" ", "").split("\\)")[0].split(",");
                             Button[] views = { findViewById(R.id.keyboard), findViewById(R.id.refresh), findViewById(R.id.clear), findViewById(R.id.homeButton), findViewById(R.id.arrowUp), findViewById(R.id.enter), findViewById(R.id.paste), findViewById(R.id.ctrl), findViewById(R.id.slash), findViewById(R.id.arrowLeft), findViewById(R.id.arrowDown), findViewById(R.id.arrowRight) };
                             int color = Color.rgb(Integer.parseInt(c[0]), Integer.parseInt(c[1]), Integer.parseInt(c[2]));
@@ -185,7 +184,18 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         webView.evaluateJavascript("document.body.dispatchEvent(new KeyboardEvent('keyup',{key:'Control'}))", null);
                     }
-                    ((Button)findViewById(R.id.ctrl)).setTextColor(control[0] ? getResources().getColor(R.color.buttons) : getResources().getColor(R.color.foreground));
+                    webView.evaluateJavascript("window.getComputedStyle(document.body.parentElement).color;", new ValueCallback<String>() {
+                        @Override
+                        public void onReceiveValue(String s) {
+                            String[] c = s.replace("\"rgb(", "").replace(" ", "").split("\\)")[0].split(",");
+                            Button[] views = { findViewById(R.id.keyboard), findViewById(R.id.refresh), findViewById(R.id.clear), findViewById(R.id.homeButton), findViewById(R.id.arrowUp), findViewById(R.id.enter), findViewById(R.id.paste), findViewById(R.id.ctrl), findViewById(R.id.slash), findViewById(R.id.arrowLeft), findViewById(R.id.arrowDown), findViewById(R.id.arrowRight) };
+                            int add = control[0] ? 72 : 0;
+                            int color = Color.rgb(Math.min(Integer.parseInt(c[0]) + add,255), Math.min(Integer.parseInt(c[1]) + add, 255), Math.min(Integer.parseInt(c[2]) + add, 255));
+                            ((Button)findViewById(R.id.ctrl)).setTextColor(color);
+                            Log.d("dev.grosik", Color.red(color) + " " + Color.green(color) + " " +Color.blue(color));
+                        }
+
+                    });
                     webView.requestFocus();
                 }
             });
@@ -221,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
             findViewById(R.id.homeButton).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    webView.loadUrl("https://grosik.ovh/typer/");
+                    webView.loadUrl("https://grosik.dev/typer/");
                 }
             });
             findViewById(R.id.paste).setOnClickListener(new View.OnClickListener() {
